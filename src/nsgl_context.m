@@ -245,15 +245,26 @@ GLFWbool _glfwCreateContextNSGL(_GLFWwindow* window,
         fbconfig->greenBits != GLFW_DONT_CARE &&
         fbconfig->blueBits != GLFW_DONT_CARE)
     {
-        int colorBits = fbconfig->redBits +
-                        fbconfig->greenBits +
-                        fbconfig->blueBits;
+        int colorBits;
 
-        // macOS needs non-zero color size, so set reasonable values
-        if (colorBits == 0)
-            colorBits = 24;
-        else if (colorBits < 15)
-            colorBits = 15;
+        if (fbconfig->redBits > 8 ||
+            fbconfig->greenBits > 8 ||
+            fbconfig->blueBits > 8)
+        {
+            colorBits = 64;
+            ADD_ATTRIB(NSOpenGLPFAColorFloat);
+        }
+        else {
+            colorBits = fbconfig->redBits +
+                    fbconfig->greenBits +
+                    fbconfig->blueBits;
+
+            // macOS needs non-zero color size, so set reasonable values
+            if (colorBits == 0)
+                colorBits = 24;
+            else if (colorBits < 15)
+                colorBits = 15;
+        }
 
         SET_ATTRIB(NSOpenGLPFAColorSize, colorBits);
     }
