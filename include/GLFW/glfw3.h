@@ -1117,6 +1117,7 @@ extern "C" {
  *  [window hint](@ref GLFW_COCOA_GRAPHICS_SWITCHING_hint).
  */
 #define GLFW_COCOA_GRAPHICS_SWITCHING 0x00023003
+#define GLFW_COCOA_NS_COLOR_SPACE     0x00023004
 /*! @brief X11 specific
  *  [window hint](@ref GLFW_X11_CLASS_NAME_hint).
  */

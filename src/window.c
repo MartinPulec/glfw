@@ -289,6 +289,8 @@ void glfwDefaultWindowHints(void)
 
     // The default is to select the highest available refresh rate
     _glfw.hints.refreshRate = GLFW_DONT_CARE;
+
+    _glfw.hints.window.ns.color = GLFW_DONT_CARE;
 }
 
 GLFWAPI void glfwWindowHint(int hint, int value)
@@ -397,6 +399,9 @@ GLFWAPI void glfwWindowHint(int hint, int value)
         case GLFW_MOUSE_PASSTHROUGH:
             _glfw.hints.window.mousePassthrough = value ? GLFW_TRUE : GLFW_FALSE;
             return;
+        case GLFW_COCOA_NS_COLOR_SPACE:
+             _glfw.hints.window.ns.color = value;
+             return;
         case GLFW_CLIENT_API:
             _glfw.hints.context.client = value;
             return;

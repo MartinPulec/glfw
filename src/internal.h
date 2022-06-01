@@ -404,6 +404,7 @@ struct _GLFWwndconfig
     GLFWbool      scaleToMonitor;
     GLFWbool      scaleFramebuffer;
     struct {
+        int       color;
         char      frameName[256];
     } ns;
     struct {

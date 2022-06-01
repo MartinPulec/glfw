@@ -888,6 +888,24 @@ static GLFWbool createNativeWindow(_GLFWwindow* window,
     [window->ns.object setAcceptsMouseMovedEvents:YES];
     [window->ns.object setRestorable:NO];
 
+    if (wndconfig->ns.color != GLFW_DONT_CARE) {
+            CFStringRef space;
+            // https://developer.apple.com/documentation/coregraphics/cgcolorspace/color_space_names
+            switch (wndconfig->ns.color) {
+                    case 1: space = kCGColorSpaceDisplayP3; break;
+                    case 2: space = kCGColorSpaceITUR_2020_HLG; break;
+                    case 3: space = kCGColorSpaceITUR_2020_PQ_EOTF; break;
+                    default:
+                            _glfwInputError(GLFW_PLATFORM_ERROR,
+                                            "Cocoa: invalid color space specified");
+                            /* fall through */
+                    case 0: space = kCGColorSpaceITUR_709; break;
+            }
+            NSColorSpace *nsColorSpace = [[NSColorSpace alloc] initWithCGColorSpace:CGColorSpaceCreateWithName(space)];
+            [window->ns.object setColorSpace:nsColorSpace];
+    }
+
+
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= 101200
     if ([window->ns.object respondsToSelector:@selector(setTabbingMode:)])
         [window->ns.object setTabbingMode:NSWindowTabbingModeDisallowed];
