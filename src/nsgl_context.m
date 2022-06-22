@@ -241,6 +241,8 @@ GLFWbool _glfwCreateContextNSGL(_GLFWwindow* window,
         }
     }
 
+    GLFWbool useHDR = false;
+
     if (fbconfig->redBits != GLFW_DONT_CARE &&
         fbconfig->greenBits != GLFW_DONT_CARE &&
         fbconfig->blueBits != GLFW_DONT_CARE)
@@ -253,6 +255,7 @@ GLFWbool _glfwCreateContextNSGL(_GLFWwindow* window,
         {
             colorBits = 64;
             ADD_ATTRIB(NSOpenGLPFAColorFloat);
+            useHDR = true;
         }
         else {
             colorBits = fbconfig->redBits +
@@ -345,6 +348,7 @@ GLFWbool _glfwCreateContextNSGL(_GLFWwindow* window,
     }
 
     [window->ns.view setWantsBestResolutionOpenGLSurface:window->ns.scaleFramebuffer];
+    [window->ns.view setWantsExtendedDynamicRangeOpenGLSurface: useHDR];
 
     [window->context.nsgl.object setView:window->ns.view];
 
