@@ -892,14 +892,31 @@ static GLFWbool createNativeWindow(_GLFWwindow* window,
             CFStringRef space;
             // https://developer.apple.com/documentation/coregraphics/cgcolorspace/color_space_names
             switch (wndconfig->ns.color) {
-                    case 1: space = kCGColorSpaceDisplayP3; break;
-                    case 2: space = kCGColorSpaceITUR_2020_HLG; break;
-                    case 3: space = kCGColorSpaceITUR_2020_PQ_EOTF; break;
+                    // colorimetry undefined
+                    case 0x00: space = kCGColorSpaceLinearSRGB; break;
+                    case 0x01: space = kCGColorSpaceITUR_709; break;
+                    case 0x02: space = kCGColorSpaceDisplayP3_HLG; break;
+                    case 0x03: space = kCGColorSpaceDisplayP3_PQ_EOTF; break;
+                    // 709
+                    case 0x10: space = kCGColorSpaceGenericRGBLinear; break;
+                    case 0x11: space = kCGColorSpaceExtendedSRGB; break;
+                    case 0x12:
+                    case 0x13:
+                            space = kCGColorSpaceITUR_709; break;
+                    // 2020/2100
+                    case 0x20: space = kCGColorSpaceExtendedLinearITUR_2020; break;
+                    case 0x21: space = kCGColorSpaceITUR_2020; break;
+                    case 0x22: space = kCGColorSpaceITUR_2020_HLG; break;
+                    case 0x23: space = kCGColorSpaceITUR_2020_PQ_EOTF; break;
+                    // P3
+                    case 0x30: space = kCGColorSpaceExtendedLinearDisplayP3; break;
+                    case 0x31: space = kCGColorSpaceDCIP3; break;
+                    case 0x32: space = kCGColorSpaceDisplayP3_HLG; break;
+                    case 0x33: space = kCGColorSpaceDisplayP3_PQ_EOTF; break;
                     default:
                             _glfwInputError(GLFW_PLATFORM_ERROR,
                                             "Cocoa: invalid color space 0x%x specified", wndconfig->ns.color);
-                            /* fall through */
-                    case 0: space = kCGColorSpaceITUR_709; break;
+                            space = kCGColorSpaceITUR_709; break;
             }
             NSColorSpace *nsColorSpace = [[NSColorSpace alloc] initWithCGColorSpace:CGColorSpaceCreateWithName(space)];
             [window->ns.object setColorSpace:nsColorSpace];
