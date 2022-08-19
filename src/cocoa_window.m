@@ -897,7 +897,7 @@ static GLFWbool createNativeWindow(_GLFWwindow* window,
                     case 3: space = kCGColorSpaceITUR_2020_PQ_EOTF; break;
                     default:
                             _glfwInputError(GLFW_PLATFORM_ERROR,
-                                            "Cocoa: invalid color space specified");
+                                            "Cocoa: invalid color space 0x%x specified", wndconfig->ns.color);
                             /* fall through */
                     case 0: space = kCGColorSpaceITUR_709; break;
             }
