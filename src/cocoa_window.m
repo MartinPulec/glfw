@@ -906,8 +906,8 @@ static GLFWbool createNativeWindow(_GLFWwindow* window,
                     // 2020/2100
                     case 0x20: space = kCGColorSpaceExtendedLinearITUR_2020; break;
                     case 0x21: space = kCGColorSpaceITUR_2020; break;
-                    case 0x22: space = kCGColorSpaceITUR_2020_HLG; break;
-                    case 0x23: space = kCGColorSpaceITUR_2020_PQ_EOTF; break;
+                    case 0x22: space = kCGColorSpaceITUR_2100_HLG; break;
+                    case 0x23: space = kCGColorSpaceITUR_2100_PQ; break;
                     // P3
                     case 0x30: space = kCGColorSpaceExtendedLinearDisplayP3; break;
                     case 0x31: space = kCGColorSpaceDCIP3; break;
